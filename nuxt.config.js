@@ -15,7 +15,7 @@ export default {
     script: [
       {
         src: 'https://kit.fontawesome.com/6b19f306a9.js',
-        crossorigin: 'anonymous',
+        crossorigin: 'anonymous'
       },
     ],
   },
@@ -36,7 +36,21 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [
+    '@nuxtjs/axios', '@nuxtjs/dotenv', '@nuxtjs/i18n',
+  ],
+
+  axios: {
+    // baseURL: ''
+  },
+
+  dotenv: {
+    // baseURL: ''
+  },
+
+  i18n: {
+    // baseURL: ''
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

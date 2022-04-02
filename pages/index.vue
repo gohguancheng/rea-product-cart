@@ -3,7 +3,7 @@
     <div class="navbar">--Navbar--</div>
     <main class="content">
       <h1>Here are our products</h1>
-      <h2>Browse the below gallery</h2>
+      <h2>Check Below To Edit Agent Cards for respective service: </h2>
       <div class="products">
         <h3>Agent Calls</h3>
       <div class="agent-calls-gallery container">
