@@ -20,14 +20,14 @@ export default {
     ],
   },
   serverMiddleware: [
-    { path: '/api', handler: '~/api/server.js' },
+    { path: '/api/', handler: '~/server-middleware/server.js' },
   ],
   router: {
     routes: [
       {
         name: 'index',
         path: '/',
-        component: 'pages/index.vue',
+        component: '~/pages/index.vue',
       },
     ],
   },
@@ -56,7 +56,7 @@ export default {
   axios: {
     proxy: true,
   },
-  proxy: { '/api': '/api' },
+  proxy: { '/api/': 'http://localhost:4000/' },
 
   i18n: {
     // detectBrowserLanguage: false,
