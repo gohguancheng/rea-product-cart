@@ -1,16 +1,12 @@
 <template>
-  <nuxt-link to="#">
+  <nuxt-link :to="id">
     <div class="card">
-      <img class="card-img-top" src="" alt="Person Image" />
+      <img class="card-img-top" src="../assets/avatar.svg" alt="Person Image" />
       <div class="card-body">
         <h3 class="card-title">
           <i class="fa-solid fa-user-tie"></i>{{ agentName }}
         </h3>
-        <p class="card-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet
-          hic nemo officia aliquam excepturi!
-        </p>
-        <p class="card-text">Price: {{ sym }} {{ priceAmount }}</p>
+        <p class="card-text">{{ sym }} {{ priceAmount }}</p>
       </div>
     </div>
   </nuxt-link>
@@ -34,6 +30,10 @@ export default {
     priceSgd: {
       type: Number,
       default: 100,
+    },
+    id: {
+      type: String,
+      default:'#',
     },
   },
   computed: {
@@ -67,8 +67,10 @@ i {
 .card {
   display: flex;
   flex-direction: column;
-  max-width: 250px;
-  height: 250px;
+  max-width: 200px;
+  min-width: 200px;
+  min-height: 250px;
+  max-height: 250px;
   border: gray solid 1px;
   margin: 5px;
   padding: 10px;
@@ -77,8 +79,8 @@ i {
 
 .card .card-img-top {
   border: 1px black solid;
-  height: 10rem;
-  width: 10rem;
+  height: 8rem;
+  width: 8rem;
   border-radius: 50%;
   display: block;
   margin: 0 auto;
@@ -90,5 +92,6 @@ i {
 
 .card .card-body .card-text {
   padding: 5px;
+  border: solid 1px rgb(0,0,0, 0.2)
 }
 </style>

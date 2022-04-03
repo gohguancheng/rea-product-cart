@@ -1,6 +1,6 @@
 export const state = () => ({
   language: 'en',
-  currency: 'SGD',
+  currency: 'SG$',
 })
 
 export const mutations = {
@@ -11,9 +11,9 @@ export const mutations = {
     state.language = 'en'
   },
   singDollar(state) {
-    state.currency = 'SGD'
+    state.currency = 'SG$'
   },
   hkDollar(state) {
-    state.currency = 'HKD'
+    state.currency = 'HK$'
   },
 }

@@ -2,7 +2,6 @@
   <div class="product-page">
     <div class="navbar">--Navbar--</div>
     <main class="content">
-      <h1>Here are our products</h1>
       <div class="btn" @click="handleLang">
         <p class="selection">Change Language</p>
         <span v-if="language === 'en'" class="language-display en">EN</span>
@@ -10,34 +9,44 @@
         <span v-if="language === 'cn'" class="language-display cn">CN</span>
         <span v-else-if="language === 'en'" class="language-display">CN</span>
       </div>
-      <div class="btn" @click="handleCurrency">
+      <h1>Here are our products</h1>
+      <div>
+        <span
+          tabindex="0"
+          class="btn calls-btn"
+          @click="
+            productType === 'calls'
+              ? (productType = '')
+              : (productType = 'calls')
+          "
+          >Calls</span
+        >
+        <span
+          tabindex="0"
+          class="btn visits-btn"
+          @click="
+            productType === 'visits'
+              ? (productType = '')
+              : (productType = 'visits')
+          "
+          >Visits</span
+        >
+      </div>
+      <div
+        v-if="!!productType && productType !== 'new'"
+        class="btn block"
+        @click="handleCurrency"
+      >
         <p class="selection">Change Currency</p>
         <span class="language-display">{{ currency }}</span>
       </div>
-      <h2>Check Below To Edit Agent Cards for respective service:</h2>
-      <span
-        tabindex="0"
-        class="btn calls-btn"
-        @click="
-          productType === 'calls' ? (productType = '') : (productType = 'calls')
-        "
-        >Calls</span
-      >
-      <span
-        tabindex="0"
-        class="btn visits-btn"
-        @click="
-          productType === 'visits'
-            ? (productType = '')
-            : (productType = 'visits')
-        "
-        >Visits</span
-      >
       <div v-if="productType === 'calls'" class="products">
         <h3 class="product-header">Agent Calls</h3>
+        <p class="product-info">Prices include GST.</p>
         <div class="agent-calls-gallery container">
           <ProductCard
             v-for="agent in callAgents"
+            :id="agent._id"
             :key="agent._id"
             :agent-name="agent.name"
             :symbol="currency"
@@ -48,29 +57,28 @@
       <div v-else-if="productType === 'visits'" class="products">
         <h3 class="product-header">Agent Visits</h3>
         <div class="agent-visits-gallery container">
-          <ProductCard agent-name="Bob" :symbol="currency" />
           <ProductCard
-            agent-name="Bob"
+            v-for="agent in visitAgents"
+            :id="agent._id"
+            :key="agent._id"
+            :agent-name="agent.name"
             :symbol="currency"
-            :price-sgd="numberGen"
-          />
-          <ProductCard
-            agent-name="Bob"
-            :symbol="currency"
-            :price-sgd="numberGen"
-          />
-          <ProductCard
-            agent-name="Bob"
-            :symbol="currency"
-            :price-sgd="numberGen"
+            :price-sgd="agent.visitPriceSGD"
           />
         </div>
       </div>
+      <CardForm v-else-if="productType === 'new'" />
       <div v-else class="products">
-        <h3 class="product-header">
-          Please click above buttons to select product type.
-        </h3>
+        <h3>Please click above buttons to select product type.</h3>
       </div>
+      <span
+        tabindex="0"
+        class="btn calls-btn"
+        @click="
+          productType === 'new' ? (productType = '') : (productType = 'new')
+        "
+        >{{productType==='new'? 'Close Form' :'Add New Product'}}</span
+      >
     </main>
     <div class="footer">--Footer--</div>
   </div>
@@ -79,10 +87,12 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import ProductCard from '../components/ProductCard.vue'
+import CardForm from '../components/ProductForm.vue'
 
 export default {
   components: {
     ProductCard,
+    CardForm,
   },
   data() {
     return {
@@ -97,11 +107,11 @@ export default {
       return Math.floor(Math.random() * 100 + 1)
     },
     callsArray() {
-      return this.callAgents;
+      return this.callAgents
     },
   },
   async mounted() {
-    await this.fetchProducts();
+    await this.fetchProducts()
   },
   methods: {
     ...mapMutations(['chineseLang', 'engLang', 'singDollar', 'hkDollar']),
@@ -119,14 +129,13 @@ export default {
       }
     },
     handleCurrency() {
-      if (this.currency === 'SGD') this.hkDollar()
-      else if (this.currency === 'HKD') this.singDollar()
+      if (this.currency === 'SG$') this.hkDollar();
+      else if (this.currency === 'HK$') this.singDollar();
     },
     async fetchProducts() {
       const { data } = await this.$axios.get('/api/product')
-      console.log(data);
-      this.callAgents = [...data.calls];
-      this.visitAgents = [...data.visits];
+      this.callAgents = [...data.calls]
+      this.visitAgents = [...data.visits]
     },
   },
 }
@@ -152,21 +161,22 @@ h2,
 h3 {
   font-weight: 300;
   line-height: 1.2;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .btn {
+  display: inline-block;
   background-color: #4caf50; /* Green */
   border: none;
   color: white;
   padding: 10px 20px;
-  margin: 10px;
+  margin: 5px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 1.2rem;
   cursor: pointer;
   border-radius: 10px;
+  max-width: 200px;
 }
 
 .btn:hover {
@@ -212,8 +222,16 @@ h3 {
   text-decoration: underline;
 }
 
+.products {
+  min-width: 98%;
+  background: #ccc;
+}
+
 .content {
   padding: 50px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container {
@@ -222,8 +240,13 @@ h3 {
   flex-wrap: wrap;
   min-height: 80%;
   max-height: max-content;
-  background: #ccc;
   margin: 0 0.5vw;
   padding: 10px;
+}
+
+.product-header {
+  font-weight: bolder;
+  font-size: 1.6rem;
+  text-decoration: underline;
 }
 </style>

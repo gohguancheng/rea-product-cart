@@ -36,18 +36,17 @@ Router.get("/", async (req, res) => {
   }
 });
 
-Router.post("/", async (req, res) => {
+Router.post("/new", async (req, res) => {
   try {
-    const v = await agentInfo.find({forVisits: true})
-    const c = await agentInfo.find({forCalls: true})
+    const input = req.body;
+    const newEntry = await agentInfo.create(input);
     res.status(200).json({
       status: "ok",
-      message: "data received",
-      visits: v,
-      calls: c,
+      message: "agent added",
+      data: newEntry,
     });
   } catch (error) {
-    console.log("at GET api/product/", error);
+    console.log("at POST api/product/new", error);
   }
 });
 
