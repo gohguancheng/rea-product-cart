@@ -9,8 +9,8 @@ const mongoose = require('mongoose')
 const db = mongoose.connection
 
 // .env import and configuration
-require('dotenv').config()
-const PORT = process.env.S_PORT || 4000;
+require('dotenv').config({path: '../.env'})
+const PORT = process.env.S_PORT;
 const mongoURI = process.env.MONGODB_URI
 
 // import controllers
