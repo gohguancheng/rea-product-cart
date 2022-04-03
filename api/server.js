@@ -32,14 +32,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //route middleware
-app.use("/api/product/", agentController);
+app.use("/product/", agentController);
 
 
-//for build
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
+// //for build
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+// });
 
 app.listen(PORT, () => {
   console.log("listening on port: " + PORT);
 });
+
+module.exports = app;

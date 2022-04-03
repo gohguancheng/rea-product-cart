@@ -19,7 +19,9 @@ export default {
       },
     ],
   },
-
+  serverMiddleware: [
+    { path: '/api', handler: '~/api/server.js' },
+  ],
   router: {
     routes: [
       {
@@ -45,12 +47,16 @@ export default {
     '@nuxtjs/eslint-module',
   ],
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/i18n', '@nuxtjs/dotenv'],
+
+  env: {
+    MONGODB_URI: process.env.MONGODB_URI
+  },
 
   axios: {
     proxy: true,
   },
-  proxy: { '/api': 'http://localhost:4000/' },
+  proxy: { '/api': '/api' },
 
   i18n: {
     // detectBrowserLanguage: false,
