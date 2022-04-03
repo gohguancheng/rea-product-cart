@@ -11,7 +11,7 @@
           hic nemo officia aliquam excepturi!
         </p>
         <p class="card-text">
-          Price: HKD
+          Price: {{sym}}
         </p>
       </div>
     </div>
@@ -28,11 +28,18 @@ export default {
     englishLang: {
       type: Boolean,
       default: true,
-    }
+    },
+    symbol: {
+      type: String,
+      default: 'Nil',
+    },
   },
   computed: {
     isEng () {
       return this.englishLang;
+    },
+    sym () {
+      return this.symbol;
     },
   },
 }
