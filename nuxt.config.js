@@ -19,9 +19,9 @@ export default {
       },
     ],
   },
-  // serverMiddleware: [
-  //   { path: '/api/', handler: '~/server-middleware/server.js' },
-  // ],
+  serverMiddleware: [
+    { path: '/api/', handler: '~/server-middleware/server.js' },
+  ],
   router: {
     routes: [
       {
@@ -51,6 +51,7 @@ export default {
 
   env: {
     MONGODB_URI: process.env.MONGODB_URI,
+    S_PORT: process.env.S_PORT,
   },
 
   axios: {

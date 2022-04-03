@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form >
     <div class="form">
       <div class="form-body">
         <label class="form-title">
@@ -43,7 +43,7 @@
           Agent must have a name and at least provide 'Calls' consultation
           services.
         </p>
-        <input class="btn" value="Submit" @click="handleSubmit" />
+        <input class="btn" value="Submit" @click="handleSubmit"/>
       </div>
     </div>
   </form>
@@ -81,20 +81,23 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      console.log('submitted!')
       if (!this.form.name || !this.form.forCalls || !this.form.callPriceSGD) {
         console.log('invalid submit');
         return null
       }
       this.form.callPriceSGD = parseInt(this.form.callPriceSGD)
       this.form.visitPriceSGD = parseInt(this.form.visitPriceSGD)
+      console.log('POST', this.form);
       await this.$axios
-        .post('/api/product/new', this.form)
+        .post('api/product/new', this.form)
         .then(function (res) {
           console.log(res);
         })
       location.reload()
     },
+    test() {
+      console.log('test!')
+    }
   },
 }
 </script>
