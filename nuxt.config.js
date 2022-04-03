@@ -1,3 +1,5 @@
+const proxy = process.env.PROX;
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -56,7 +58,7 @@ export default {
   axios: {
     proxy: true,
   },
-  proxy: { '/api/': 'http://localhost:4000/', },
+  proxy: { '/api/': proxy, },
 
   i18n: {
     detectBrowserLanguage: false,
