@@ -15,7 +15,17 @@ export default {
     script: [
       {
         src: 'https://kit.fontawesome.com/6b19f306a9.js',
-        crossorigin: 'anonymous'
+        crossorigin: 'anonymous',
+      },
+    ],
+  },
+
+  router: {
+    routes: [
+      {
+        name: 'index',
+        path: '/',
+        component: 'pages/index.vue',
       },
     ],
   },
@@ -34,22 +44,26 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
   ],
-
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    '@nuxtjs/axios', '@nuxtjs/dotenv', '@nuxtjs/i18n',
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/i18n'],
 
   axios: {
-    // baseURL: ''
+    proxy: true,
   },
-
-  dotenv: {
-    // baseURL: ''
-  },
+  proxy: { '/api': 'http://localhost:4000/' },
 
   i18n: {
-    // baseURL: ''
+    // detectBrowserLanguage: false,
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+      },
+      {
+        code: 'cn',
+        name: 'Chinese',
+      },
+    ],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
