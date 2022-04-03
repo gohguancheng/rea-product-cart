@@ -117,14 +117,16 @@ export default {
     ...mapMutations(['chineseLang', 'engLang', 'singDollar', 'hkDollar']),
     handleLang() {
       if (this.language === 'en') {
+        this.$i18n.locale = 'cn';
         this.chineseLang()
         this.$router.push({
           path: '/cn',
         })
       } else if (this.language === 'cn') {
+        this.$i18n.locale = 'en';
         this.engLang()
         this.$router.push({
-          path: '/en',
+          path: '/',
         })
       }
     },

@@ -1,22 +1,22 @@
 const path = require('path')
 
-//express
+// express
 const express = require('express')
 const app = express()
 
-//mongoose
+// mongoose
 const mongoose = require('mongoose')
 const db = mongoose.connection
 
-//.env import and configuration
+// .env import and configuration
 require('dotenv').config()
 const PORT = process.env.S_PORT || 4000;
 const mongoURI = process.env.MONGODB_URI
 
-//import controllers
+// import controllers
 const agentController = require('./controllers/agent.controller.js')
 
-//connect to mongoDB
+// connect to mongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true })
 mongoose.connection.once('open', () => {
   console.log('connected to mongoose successfully!')

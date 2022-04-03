@@ -1,5 +1,5 @@
 <template>
-  <form @submit="handleSubmission">
+  <form>
     <div class="form">
       <div class="form-body">
         <label class="form-title">
@@ -19,9 +19,7 @@
           <input id="checkbox" v-model="form.forVisits" type="checkbox" />
           <label for="checkbox">Visits</label>
         </span>
-        <label class="form-text"
-          >Call Price (SGD/hour, excluding GST)</label
-        >
+        <label class="form-text">Call Price (SGD/hour, excluding GST)</label>
         <div class="input">
           <input
             v-model="form.callPriceSGD"
@@ -42,9 +40,10 @@
           <span> SGD</span>
         </div>
         <p v-if="invalidForm" class="form-text invalid">
-          Agent must have a name and at least provide 'Calls' consultation services.
+          Agent must have a name and at least provide 'Calls' consultation
+          services.
         </p>
-        <button class="btn">Submit</button>
+        <input class="btn" value="Submit" @click="handleSubmit" />
       </div>
     </div>
   </form>
@@ -77,16 +76,24 @@ export default {
       return this.form.forVisits
     },
     invalidForm() {
-      return (!this.form.forCalls) || (!this.form.name);
+      return !this.form.forCalls || !this.form.name
     },
   },
   methods: {
-    async handleSubmission() {
-      if (!this.form.name || !this.form.forCalls || !this.form.callPriceSGD)
+    async handleSubmit() {
+      console.log('submitted!')
+      if (!this.form.name || !this.form.forCalls || !this.form.callPriceSGD) {
+        console.log('invalid submit');
         return null
+      }
       this.form.callPriceSGD = parseInt(this.form.callPriceSGD)
       this.form.visitPriceSGD = parseInt(this.form.visitPriceSGD)
-      await this.$axios.post('/api/product/new', this.form)
+      await this.$axios
+        .post('/api/product/new', this.form)
+        .then(function (res) {
+          console.log(res);
+        })
+      location.reload()
     },
   },
 }

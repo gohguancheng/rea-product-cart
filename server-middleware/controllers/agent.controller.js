@@ -1,12 +1,12 @@
 const express = require("express");
 const Router = express.Router();
 
-//import tea cards info
+// import models info
 const agentInfo = require("../models/products.js");
 const seedAgents = require("../models/products.seed.js");
 
 //* ROUTES
-//get "api/product/seed"
+// get "api/product/seed"
 Router.get("/seed", async (req, res) => {
   try {
     await agentInfo.deleteMany({});
@@ -37,6 +37,7 @@ Router.get("/", async (req, res) => {
 });
 
 Router.post("/new", async (req, res) => {
+  console.log('new agent!')
   try {
     const input = req.body;
     const newEntry = await agentInfo.create(input);

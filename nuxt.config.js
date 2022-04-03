@@ -19,9 +19,9 @@ export default {
       },
     ],
   },
-  serverMiddleware: [
-    { path: '/api/', handler: '~/server-middleware/server.js' },
-  ],
+  // serverMiddleware: [
+  //   { path: '/api/', handler: '~/server-middleware/server.js' },
+  // ],
   router: {
     routes: [
       {
@@ -50,27 +50,31 @@ export default {
   modules: ['@nuxtjs/axios', '@nuxtjs/i18n', '@nuxtjs/dotenv'],
 
   env: {
-    MONGODB_URI: process.env.MONGODB_URI
+    MONGODB_URI: process.env.MONGODB_URI,
   },
 
   axios: {
     proxy: true,
   },
-  proxy: { '/api/': 'http://localhost:4000/' },
+  proxy: { '/api/': 'http://localhost:4000/', },
 
   i18n: {
-    // detectBrowserLanguage: false,
-    locales: [
-      {
-        code: 'en',
-        name: 'English',
-      },
-      {
-        code: 'cn',
-        name: 'Chinese',
-      },
-    ],
+    detectBrowserLanguage: false,
+    locales: [ 'en', 'cn' ],
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en',
+      messages: {
+        en: {
+          welcome: 'Welcome',
+        },
+        cn: {
+          welcome: 'Bienvenue',
+
+      }
+    }
   },
+},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
