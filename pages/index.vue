@@ -61,25 +61,28 @@
         <p class="product-info">Prices include GST.</p>
         <div class="agent-calls-gallery container">
           <ProductCard
-            v-for="agent in callAgents"
+            v-for="(agent, index) in callAgents"
             :id="agent._id"
-            :key="agent._id"
+            :key="`c${agent._id}`"
             :agent-name="agent.name"
             :symbol="currency"
             :price-sgd="agent.callPriceSGD"
+            :unique="`c${index}`"
           />
         </div>
       </div>
       <div v-else-if="productType === 'visits'" class="products">
         <h3 class="product-header">Agent Visits</h3>
+        <p class="product-info">Prices include GST.</p>
         <div class="agent-visits-gallery container">
           <ProductCard
-            v-for="agent in visitAgents"
+            v-for="(agent, index) in visitAgents"
             :id="agent._id"
-            :key="agent._id"
+            :key="`v${agent._id}`"
             :agent-name="agent.name"
             :symbol="currency"
             :price-sgd="agent.visitPriceSGD"
+            :unique="`v${index}`"
           />
         </div>
       </div>
