@@ -29,7 +29,7 @@ db.on('disconnected', () => console.log('mongo database disconnected'))
 // app middleware
 app.use(express.static(path.join(__dirname, './frontend/build')))
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: false }))
 
 // route middleware
 app.use('/api/product/', agentController)

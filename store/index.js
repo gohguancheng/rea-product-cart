@@ -1,6 +1,7 @@
 export const state = () => ({
   language: 'en',
   currency: 'SG$',
+  total: 0,
 })
 
 export const mutations = {
@@ -16,4 +17,7 @@ export const mutations = {
   hkDollar(state) {
     state.currency = 'HK$'
   },
+  computeTotal(state, amount) {
+    state.total += amount;
+  }
 }

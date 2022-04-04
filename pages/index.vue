@@ -32,6 +32,22 @@
           >Visits</span
         >
       </div>
+      <div class="subtotal cf">
+        <ul>
+          <li class="totalRow">
+            <span class="label">Subtotal</span><span class="value"> {{currency}} {{totalBeforeTax.toFixed(2)}}</span>
+          </li>
+          <li class="totalRow">
+            <span class="label">Tax</span><span class="value"> {{currency}} {{(totalBeforeTax*GstAmt).toFixed(2)}}</span>
+          </li>
+          <li class="totalRow final">
+            <span class="label">Total</span><span class="value"> {{currency}} {{ (totalBeforeTax * (1+GstAmt)).toFixed(2)}}</span>
+          </li>
+          <li class="totalRow">
+            <a href="#" class="btn continue">Checkout</a>
+          </li>
+        </ul>
+      </div>
       <div
         v-if="!!productType && productType !== 'new'"
         class="btn block"
@@ -77,7 +93,7 @@
         @click="
           productType === 'new' ? (productType = '') : (productType = 'new')
         "
-        >{{productType==='new'? 'Close Form' :'Add New Product'}}</span
+        >{{ productType === 'new' ? 'Close Form' : 'Add New Product' }}</span
       >
     </main>
     <div class="footer">--Footer--</div>
@@ -102,13 +118,27 @@ export default {
     }
   },
   computed: {
-    ...mapState(['language', 'currency']),
+    ...mapState(['language', 'currency', 'total']),
     numberGen() {
       return Math.floor(Math.random() * 100 + 1)
     },
     callsArray() {
       return this.callAgents
     },
+    GstAmt() {
+      if (this.currency === 'HK$') {
+        return 0.03;
+      } else {
+        return 0.07;
+      }
+    },
+    totalBeforeTax() {
+      if (this.currency === 'HK$') {
+        return this.total * 5.77;
+      } else {
+        return this.total;
+      }
+    }
   },
   async mounted() {
     await this.fetchProducts()
@@ -117,13 +147,13 @@ export default {
     ...mapMutations(['chineseLang', 'engLang', 'singDollar', 'hkDollar']),
     handleLang() {
       if (this.language === 'en') {
-        this.$i18n.locale = 'cn';
+        this.$i18n.locale = 'cn'
         this.chineseLang()
         this.$router.push({
           path: '/cn',
         })
       } else if (this.language === 'cn') {
-        this.$i18n.locale = 'en';
+        this.$i18n.locale = 'en'
         this.engLang()
         this.$router.push({
           path: '/',
@@ -131,8 +161,8 @@ export default {
       }
     },
     handleCurrency() {
-      if (this.currency === 'SG$') this.hkDollar();
-      else if (this.currency === 'HK$') this.singDollar();
+      if (this.currency === 'SG$') this.hkDollar()
+      else if (this.currency === 'HK$') this.singDollar()
     },
     async fetchProducts() {
       const { data } = await this.$axios.get('/api/product')
@@ -250,5 +280,33 @@ h3 {
   font-weight: bolder;
   font-size: 1.6rem;
   text-decoration: underline;
+}
+
+.subtotal {
+  float: right;
+  width: 35%;
+}
+.totalRow {
+  list-style: none;
+  padding: 0.5em;
+  text-align: right;
+}
+.final {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+.final span {
+  display: inline-block;
+  padding: 0 0 0 1em;
+  text-align: right;
+}
+.label {
+  font-size: 0.85em;
+  text-transform: uppercase;
+  color: #777;
+}
+.value {
+  letter-spacing: -0.025em;
+  width: 35%;
 }
 </style>

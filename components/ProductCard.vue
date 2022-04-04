@@ -1,6 +1,6 @@
 <template>
-  <nuxt-link :to="id">
-    <div class="card">
+  <div @click="handleSelection">
+    <div id="dynamic" class="card">
       <img class="card-img-top" src="../assets/avatar.svg" alt="Person Image" />
       <div class="card-body">
         <h3 class="card-title">
@@ -9,10 +9,11 @@
         <p class="card-text">{{ sym }} {{ priceAmount }}</p>
       </div>
     </div>
-  </nuxt-link>
+  </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   props: {
     agentName: {
@@ -36,7 +37,13 @@ export default {
       default:'#',
     },
   },
+  data() {
+    return {
+      selected: false
+      }
+  },
   computed: {
+    ...mapState(['total']),
     isEng() {
       return this.englishLang
     },
@@ -45,12 +52,26 @@ export default {
     },
     priceAmount() {
       if (this.symbol === 'HKD') {
-        return (this.priceSgd * 5.77 * 1.03).toFixed(2);
+        return (this.priceSgd * 5.77).toFixed(2);
       } else {
-        return (this.priceSgd * 1.07).toFixed(2);
+        return (this.priceSgd).toFixed(2);
       }
     },
   },
+  methods: {
+    ...mapMutations(['computeTotal']),
+    handleSelection() {
+      console.log('sel!')
+      if (this.selected) {
+        document.getElementById("dynamic").classList.add('blue');
+        this.computeTotal(-this.priceSgd)
+      } else {
+        document.getElementById("dynamic").classList.remove('blue');
+        this.computeTotal(this.priceSgd)
+      }
+      this.selected = !this.selected;
+    }
+  }
 }
 </script>
 
@@ -75,6 +96,7 @@ i {
   margin: 5px;
   padding: 10px;
   background: #fff;
+  cursor: pointer;
 }
 
 .card .card-img-top {
@@ -93,5 +115,9 @@ i {
 .card .card-body .card-text {
   padding: 5px;
   border: solid 1px rgb(0,0,0, 0.2)
+}
+
+.blue-border {
+  border: 1px blue solid;
 }
 </style>
