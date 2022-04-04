@@ -1,0 +1,15 @@
+{
+  "changeLang": "选择简单中文",
+  "intro": "Here are our products",
+  "calls": "Calls",
+  "visits": "Visits",
+  "changeCurr": "Change Currency",
+  "agentCalls": "Agent Calls",
+  "agentVisits": "Agent Visits",
+  "priceDisclaimer": "Prices exclude GST.",
+  "clickButtons": "Please click above buttons to select product type.",
+  "subtotal": "Subtotal",
+  "tax": "GST",
+  "total": "Total",
+  "checkout": "Checkout"
+}

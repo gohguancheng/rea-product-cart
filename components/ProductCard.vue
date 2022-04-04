@@ -6,7 +6,10 @@
         <h3 class="card-title">
           <i class="fa-solid fa-user-tie"></i>{{ agentName }}
         </h3>
-        <p>{{ service }}</p>
+        <div>
+        <i v-if="unique[0] === 'v'" class="fa-solid fa-building-user"></i>
+        <i v-if="unique[0] === 'c'" class="fa-solid fa-phone-rotary"></i>
+        </div>
         <p class="card-text">{{ sym }} {{ priceAmount }}</p>
       </div>
     </div>
@@ -85,7 +88,6 @@ export default {
     ...mapMutations(['adjustCart']),
     handleSelection() {
       const payload = { id: this.identifier, amount: this.priceSgd }
-      console.log(this.selected);
       if (this.selected) {
         document.getElementById(this.identifier).classList.remove('blue-border')
       } else {

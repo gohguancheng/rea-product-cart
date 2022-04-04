@@ -1,15 +1,15 @@
 <template>
   <div class="product-page">
-    <div class="navbar">--Navbar--</div>
+    <div class="navbar"><i class="fa-duotone fa-city"></i></div>
     <main class="content">
       <div class="btn" @click="handleLang">
-        <p class="selection">Change Language</p>
+        <p class="selection">{{ $t('changeLang') }}</p>
         <span v-if="language === 'en'" class="language-display en">EN</span>
         <span v-else-if="language === 'cn'" class="language-display">EN</span>
         <span v-if="language === 'cn'" class="language-display cn">CN</span>
         <span v-else-if="language === 'en'" class="language-display">CN</span>
       </div>
-      <h1>Here are our products</h1>
+      <h1>{{ $t('intro') }}</h1>
       <div>
         <span
           tabindex="0"
@@ -19,7 +19,7 @@
               ? (productType = '')
               : (productType = 'calls')
           "
-          >Calls</span
+          >{{ $t('calls') }}</span
         >
         <span
           tabindex="0"
@@ -29,36 +29,21 @@
               ? (productType = '')
               : (productType = 'visits')
           "
-          >Visits</span
+          >{{ $t('visits') }}</span
         >
       </div>
-      <div class="subtotal cf">
-        <ul>
-          <li class="totalRow">
-            <span class="label">Subtotal</span><span class="value"> {{currency}} {{totalBeforeTax.toFixed(2)}}</span>
-          </li>
-          <li class="totalRow">
-            <span class="label">Tax</span><span class="value"> {{currency}} {{(totalBeforeTax*GstAmt).toFixed(2)}}</span>
-          </li>
-          <li class="totalRow final">
-            <span class="label">Total</span><span class="value"> {{currency}} {{ (totalBeforeTax * (1+GstAmt)).toFixed(2)}}</span>
-          </li>
-          <li class="totalRow">
-            <a href="#" class="btn continue">Checkout</a>
-          </li>
-        </ul>
-      </div>
+
       <div
         v-if="!!productType && productType !== 'new'"
         class="btn block"
         @click="handleCurrency"
       >
-        <p class="selection">Change Currency</p>
+        <p class="selection">{{ $t('changeCurr') }}</p>
         <span class="language-display">{{ currency }}</span>
       </div>
       <div v-if="productType === 'calls'" class="products">
-        <h3 class="product-header">Agent Calls</h3>
-        <p class="product-info">Prices include GST.</p>
+        <h3 class="product-header">{{ $t('agentCalls') }}</h3>
+        <p class="product-info">{{ $t('priceDisclaimer') }}</p>
         <div class="agent-calls-gallery container">
           <ProductCard
             v-for="(agent, index) in callAgents"
@@ -72,8 +57,8 @@
         </div>
       </div>
       <div v-else-if="productType === 'visits'" class="products">
-        <h3 class="product-header">Agent Visits</h3>
-        <p class="product-info">Prices include GST.</p>
+        <h3 class="product-header">{{ $t('agentVisits') }}</h3>
+        <p class="product-info">{{ $t('priceDisclaimer') }}</p>
         <div class="agent-visits-gallery container">
           <ProductCard
             v-for="(agent, index) in visitAgents"
@@ -86,20 +71,51 @@
           />
         </div>
       </div>
-      <CardForm v-else-if="productType === 'new'" />
       <div v-else class="products">
-        <h3>Please click above buttons to select product type.</h3>
+        <h3>{{ $t('clickButtons') }}</h3>
       </div>
+      <div class="subtotal cf">
+        <ul>
+          <li class="totalRow">
+            <span class="label">{{ $t('subtotal') }}</span
+            ><span class="value">
+              {{ currency }} {{ totalBeforeTax.toFixed(2) }}</span
+            >
+          </li>
+          <li class="totalRow">
+            <span class="label">{{ $t('tax') }}</span
+            ><span class="value">
+              {{ currency }} {{ (totalBeforeTax * GstAmt).toFixed(2) }}</span
+            >
+          </li>
+          <li class="totalRow final">
+            <span class="label">{{ $t('total') }}</span
+            ><span class="value">
+              {{ currency }}
+              {{ (totalBeforeTax * (1 + GstAmt)).toFixed(2) }}</span
+            >
+          </li>
+          <li class="totalRow">
+            <a href="#" class="btn continue">{{ $t('checkout') }}</a>
+          </li>
+        </ul>
+      </div>
+      <CardForm v-if="productType === 'new'" />
       <span
         tabindex="0"
         class="btn calls-btn"
         @click="
           productType === 'new' ? (productType = '') : (productType = 'new')
         "
-        >{{ productType === 'new' ? 'Close Form' : 'Add New Product' }}</span
+        >{{ productType === 'new' ? 'X' : '+' }}</span
       >
     </main>
-    <div class="footer">--Footer--</div>
+    <div class="footer">
+      <i class="fa-solid twitter"></i>
+      <i class="fa-solid linkedin"></i>
+      <i class="fa-solid youtube"></i>
+      <i class="fa-solid instagram"></i>
+    </div>
   </div>
 </template>
 
@@ -130,18 +146,18 @@ export default {
     },
     GstAmt() {
       if (this.currency === 'HK$') {
-        return 0.03;
+        return 0.03
       } else {
-        return 0.07;
+        return 0.07
       }
     },
     totalBeforeTax() {
       if (this.currency === 'HK$') {
-        return this.total * 5.77;
+        return this.total * 5.77
       } else {
-        return this.total;
+        return this.total
       }
-    }
+    },
   },
   async mounted() {
     await this.fetchProducts()

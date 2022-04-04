@@ -1,18 +1,12 @@
 // plugins/i18n.js
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
-Vue.use(VueI18n)
+import en from '../locales/en.json'
+import cn from '../locales/cn.json'
 
-export default ({ app, store }) => {
-  // inject our i18n instance into the app root to be used in middleware
-  // we assume a store/index.js file has been defined and the variable 'locale' defined on store, we'll go into this in detail in the next code snippet
-  app.i18n = new VueI18n({ // construction a new VueI18n
-    locale: store.state.locale,
-    fallbackLocale: 'en',// always displays Chinese if English translation is not available
-    messages: {
+export default {
+  locale:'en',
+  fallbackLocale: 'en',// always displays English if Chinese translation is not available
+  messages: {
       // 'locales' directory contains all the translations in the form of json files
-      'en': require('~/locales/en.json'), 
-      'cn': require('~/locales/cn.json')
-    }
-  })
+      en,  cn
+  }
 }
