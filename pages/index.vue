@@ -95,7 +95,7 @@
               {{ (totalBeforeTax * (1 + GstAmt)).toFixed(2) }}</span
             >
           </li>
-          <li class="totalRow">
+          <li class="totalRow continue">
             <a href="#" class="btn continue">{{ $t('checkout') }}</a>
           </li>
         </ul>
@@ -302,8 +302,8 @@ h3 {
 }
 
 .subtotal {
-  float: right;
-  width: 35%;
+  min-width: 375px;
+  padding: 20px 0;
 }
 .totalRow {
   list-style: none;
@@ -327,5 +327,10 @@ h3 {
 .value {
   letter-spacing: -0.025em;
   width: 35%;
+}
+
+.continue {
+  width: 100%;
+  max-width: 100%;
 }
 </style>
