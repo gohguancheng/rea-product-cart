@@ -8,7 +8,7 @@
         </h3>
         <div>
         <i v-if="unique[0] === 'v'" class="fa-solid fa-building-user"></i>
-        <i v-if="unique[0] === 'c'" class="fa-solid fa-phone-rotary"></i>
+        <i v-if="unique[0] === 'c'" class="fa-solid fa-phone"></i>
         </div>
         <p class="card-text">{{ sym }} {{ priceAmount }}</p>
       </div>
