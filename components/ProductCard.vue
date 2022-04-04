@@ -1,6 +1,6 @@
 <template>
   <div @click="handleSelection">
-    <div id="dynamic" class="card">
+    <div :id="id" class="card">
       <img class="card-img-top" src="../assets/avatar.svg" alt="Person Image" />
       <div class="card-body">
         <h3 class="card-title">
@@ -61,12 +61,11 @@ export default {
   methods: {
     ...mapMutations(['computeTotal']),
     handleSelection() {
-      console.log('sel!')
       if (this.selected) {
-        document.getElementById("dynamic").classList.add('blue');
+        document.getElementById(this.id).classList.remove('blue-border');
         this.computeTotal(-this.priceSgd)
       } else {
-        document.getElementById("dynamic").classList.remove('blue');
+        document.getElementById(this.id).classList.add('blue-border');
         this.computeTotal(this.priceSgd)
       }
       this.selected = !this.selected;
@@ -118,6 +117,6 @@ i {
 }
 
 .blue-border {
-  border: 1px blue solid;
+  border: 5px blue solid;
 }
 </style>
